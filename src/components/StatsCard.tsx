@@ -14,7 +14,7 @@ export function StatsCard({ title, value, change, changeType, icon: Icon }: Stat
       <div className="flex items-center justify-between mb-3">
         <span className="text-sm font-medium text-muted-foreground">{title}</span>
         <div className="h-9 w-9 rounded-lg bg-accent flex items-center justify-center">
-          <Icon className="h-4 w-4 text-accent-foreground" />
+          <Icon className="h-4 w-4" style={{ stroke: "url(#pink-gradient)" }} />
         </div>
       </div>
       <p className="text-2xl font-bold">{value}</p>

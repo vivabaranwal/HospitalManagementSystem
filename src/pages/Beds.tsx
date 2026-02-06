@@ -38,7 +38,7 @@ export default function Beds() {
                 <div className="flex items-center justify-between mb-4">
                   <div className="flex items-center gap-3">
                     <div className="h-10 w-10 rounded-lg bg-accent flex items-center justify-center">
-                      <BedDouble className="h-5 w-5 text-accent-foreground" />
+                      <BedDouble className="h-5 w-5" style={{ stroke: "url(#pink-gradient)" }} />
                     </div>
                     <div>
                       <h3 className="font-semibold text-sm">{ward.name}</h3>

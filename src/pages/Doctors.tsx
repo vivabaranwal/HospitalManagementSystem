@@ -31,7 +31,7 @@ export default function Doctors() {
             <div key={doc.id} className="bg-card rounded-lg border p-5 hover:shadow-sm transition-shadow animate-fade-in">
               <div className="flex items-center gap-3 mb-4">
                 <div className="h-11 w-11 rounded-full bg-accent flex items-center justify-center">
-                  <Stethoscope className="h-5 w-5 text-accent-foreground" />
+                  <Stethoscope className="h-5 w-5" style={{ stroke: "url(#pink-gradient)" }} />
                 </div>
                 <div>
                   <h3 className="font-semibold text-sm">{doc.name}</h3>
