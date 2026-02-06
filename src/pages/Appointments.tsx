@@ -36,7 +36,7 @@ export default function Appointments() {
           {appointments.map((apt) => (
             <div key={apt.id} className="bg-card rounded-lg border p-4 flex flex-col sm:flex-row sm:items-center gap-4 hover:shadow-sm transition-shadow animate-fade-in">
               <div className="h-10 w-10 rounded-lg bg-accent flex items-center justify-center shrink-0">
-                <CalendarCheck className="h-5 w-5 text-accent-foreground" />
+                <CalendarCheck className="h-5 w-5" style={{ stroke: "url(#pink-gradient)" }} />
               </div>
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2 mb-1">

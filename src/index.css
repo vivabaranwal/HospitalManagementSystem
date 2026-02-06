@@ -45,6 +45,9 @@
     --sidebar-border: 210 30% 18%;
     --sidebar-ring: 173 58% 50%;
 
+    --gradient-pink-from: 330 85% 60%;
+    --gradient-pink-to: 350 90% 45%;
+
     --success: 152 60% 42%;
     --success-foreground: 0 0% 100%;
     --warning: 38 92% 50%;

@@ -31,7 +31,7 @@ export function AppSidebar() {
     <Sidebar collapsible="icon">
       <div className="p-4 flex items-center gap-3 border-b border-sidebar-border">
         <div className="h-9 w-9 rounded-lg bg-sidebar-primary flex items-center justify-center shrink-0">
-          <Activity className="h-5 w-5 text-sidebar-primary-foreground" />
+          <Activity className="h-5 w-5" style={{ stroke: "url(#pink-gradient)" }} />
         </div>
         <div className="group-data-[collapsible=icon]:hidden">
           <h1 className="font-bold text-sidebar-primary-foreground text-base leading-tight">MediCare</h1>
