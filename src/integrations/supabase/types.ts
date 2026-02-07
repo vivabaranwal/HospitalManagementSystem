@@ -14,7 +14,173 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      appointments: {
+        Row: {
+          created_at: string
+          date: string
+          department: string
+          doctor_id: string | null
+          id: string
+          patient_id: string | null
+          status: string
+          time: string
+          type: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          date: string
+          department: string
+          doctor_id?: string | null
+          id?: string
+          patient_id?: string | null
+          status?: string
+          time: string
+          type?: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          date?: string
+          department?: string
+          doctor_id?: string | null
+          id?: string
+          patient_id?: string | null
+          status?: string
+          time?: string
+          type?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "appointments_doctor_id_fkey"
+            columns: ["doctor_id"]
+            isOneToOne: false
+            referencedRelation: "doctors"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "appointments_patient_id_fkey"
+            columns: ["patient_id"]
+            isOneToOne: false
+            referencedRelation: "patients"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      doctors: {
+        Row: {
+          created_at: string
+          experience: string
+          id: string
+          name: string
+          patients: number
+          specialty: string
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          experience: string
+          id?: string
+          name: string
+          patients?: number
+          specialty: string
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          experience?: string
+          id?: string
+          name?: string
+          patients?: number
+          specialty?: string
+          status?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      patients: {
+        Row: {
+          age: number
+          created_at: string
+          department: string
+          doctor_id: string | null
+          gender: string
+          id: string
+          name: string
+          patient_id: string
+          phone: string | null
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          age: number
+          created_at?: string
+          department: string
+          doctor_id?: string | null
+          gender: string
+          id?: string
+          name: string
+          patient_id: string
+          phone?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          age?: number
+          created_at?: string
+          department?: string
+          doctor_id?: string | null
+          gender?: string
+          id?: string
+          name?: string
+          patient_id?: string
+          phone?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "patients_doctor_id_fkey"
+            columns: ["doctor_id"]
+            isOneToOne: false
+            referencedRelation: "doctors"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      wards: {
+        Row: {
+          created_at: string
+          id: string
+          name: string
+          occupied: number
+          total: number
+          type: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          name: string
+          occupied?: number
+          total: number
+          type: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          name?: string
+          occupied?: number
+          total?: number
+          type?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
