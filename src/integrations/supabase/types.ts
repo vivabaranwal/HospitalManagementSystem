@@ -110,10 +110,10 @@ export type Database = {
           gender: string
           id: string
           name: string
-          patient_id: string
           phone: string | null
           status: string
           updated_at: string
+          ward_id: string | null
         }
         Insert: {
           age: number
@@ -123,10 +123,10 @@ export type Database = {
           gender: string
           id?: string
           name: string
-          patient_id: string
           phone?: string | null
           status?: string
           updated_at?: string
+          ward_id?: string | null
         }
         Update: {
           age?: number
@@ -136,12 +136,19 @@ export type Database = {
           gender?: string
           id?: string
           name?: string
-          patient_id?: string
           phone?: string | null
           status?: string
           updated_at?: string
+          ward_id?: string | null
         }
         Relationships: [
+          {
+            foreignKeyName: "fk_ward"
+            columns: ["ward_id"]
+            isOneToOne: false
+            referencedRelation: "wards"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "patients_doctor_id_fkey"
             columns: ["doctor_id"]
