@@ -5,7 +5,6 @@ import {
   BedDouble,
   Stethoscope,
   Activity,
-  LogOut,
 } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
 import {
@@ -17,10 +16,7 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-  SidebarFooter,
 } from "@/components/ui/sidebar";
-import { useAuth } from "@/hooks/useAuth";
-import { useNavigate } from "react-router-dom";
 
 const mainNav = [
   { title: "Dashboard", url: "/", icon: LayoutDashboard },
@@ -31,14 +27,6 @@ const mainNav = [
 ];
 
 export function AppSidebar() {
-  const { signOut, user } = useAuth();
-  const navigate = useNavigate();
-
-  const handleSignOut = async () => {
-    await signOut();
-    navigate("/auth");
-  };
-
   return (
     <Sidebar collapsible="icon">
       <div className="p-4 flex items-center gap-3 border-b border-sidebar-border">
@@ -74,21 +62,6 @@ export function AppSidebar() {
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
-      <SidebarFooter>
-        <SidebarMenu>
-          <SidebarMenuItem>
-            <SidebarMenuButton onClick={handleSignOut} tooltip="Sign Out" className="hover:bg-sidebar-accent">
-              <LogOut className="h-4 w-4" />
-              <span>Sign Out</span>
-            </SidebarMenuButton>
-          </SidebarMenuItem>
-        </SidebarMenu>
-        {user && (
-          <p className="text-[10px] text-sidebar-foreground/40 px-3 pb-2 truncate group-data-[collapsible=icon]:hidden">
-            {user.email}
-          </p>
-        )}
-      </SidebarFooter>
     </Sidebar>
   );
 }

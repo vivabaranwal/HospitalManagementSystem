@@ -3,8 +3,17 @@ import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Search, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { usePatients } from "@/hooks/usePatients";
-import { Skeleton } from "@/components/ui/skeleton";
+
+const patients = [
+  { id: "P-1001", name: "Sarah Johnson", age: 34, gender: "Female", phone: "(555) 123-4567", department: "Cardiology", status: "Admitted", doctor: "Dr. Smith" },
+  { id: "P-1002", name: "Michael Chen", age: 52, gender: "Male", phone: "(555) 234-5678", department: "Neurology", status: "Outpatient", doctor: "Dr. Patel" },
+  { id: "P-1003", name: "Emily Davis", age: 28, gender: "Female", phone: "(555) 345-6789", department: "Orthopedics", status: "Discharged", doctor: "Dr. Kim" },
+  { id: "P-1004", name: "James Wilson", age: 67, gender: "Male", phone: "(555) 456-7890", department: "Oncology", status: "Admitted", doctor: "Dr. Adams" },
+  { id: "P-1005", name: "Maria Garcia", age: 41, gender: "Female", phone: "(555) 567-8901", department: "Dermatology", status: "Outpatient", doctor: "Dr. Lee" },
+  { id: "P-1006", name: "David Brown", age: 59, gender: "Male", phone: "(555) 678-9012", department: "Cardiology", status: "Admitted", doctor: "Dr. Smith" },
+  { id: "P-1007", name: "Lisa Thompson", age: 45, gender: "Female", phone: "(555) 789-0123", department: "Gynecology", status: "Outpatient", doctor: "Dr. Wang" },
+  { id: "P-1008", name: "Robert Lee", age: 73, gender: "Male", phone: "(555) 890-1234", department: "Pulmonology", status: "Admitted", doctor: "Dr. Patel" },
+];
 
 const statusColor: Record<string, string> = {
   Admitted: "bg-info/15 text-info border-info/20",
@@ -13,8 +22,6 @@ const statusColor: Record<string, string> = {
 };
 
 export default function Patients() {
-  const { data: patients, isLoading } = usePatients();
-
   return (
     <DashboardLayout>
       <div className="space-y-6">
@@ -33,43 +40,36 @@ export default function Patients() {
           <Input placeholder="Search patients..." className="pl-9" />
         </div>
 
-        {isLoading ? (
-          <Skeleton className="h-64 rounded-lg" />
-        ) : (
-          <div className="bg-card rounded-lg border overflow-x-auto">
-            <table className="w-full text-sm">
-              <thead>
-                <tr className="border-b bg-muted/50">
-                  <th className="text-left p-3 font-medium text-muted-foreground">ID</th>
-                  <th className="text-left p-3 font-medium text-muted-foreground">Name</th>
-                  <th className="text-left p-3 font-medium text-muted-foreground">Age</th>
-                  <th className="text-left p-3 font-medium text-muted-foreground">Gender</th>
-                  <th className="text-left p-3 font-medium text-muted-foreground">Department</th>
-                  <th className="text-left p-3 font-medium text-muted-foreground">Doctor</th>
-                  <th className="text-left p-3 font-medium text-muted-foreground">Status</th>
+        <div className="bg-card rounded-lg border overflow-x-auto">
+          <table className="w-full text-sm">
+            <thead>
+              <tr className="border-b bg-muted/50">
+                <th className="text-left p-3 font-medium text-muted-foreground">ID</th>
+                <th className="text-left p-3 font-medium text-muted-foreground">Name</th>
+                <th className="text-left p-3 font-medium text-muted-foreground">Age</th>
+                <th className="text-left p-3 font-medium text-muted-foreground">Gender</th>
+                <th className="text-left p-3 font-medium text-muted-foreground">Department</th>
+                <th className="text-left p-3 font-medium text-muted-foreground">Doctor</th>
+                <th className="text-left p-3 font-medium text-muted-foreground">Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {patients.map((p) => (
+                <tr key={p.id} className="border-b last:border-0 hover:bg-muted/30 transition-colors">
+                  <td className="p-3 text-muted-foreground font-mono text-xs">{p.id}</td>
+                  <td className="p-3 font-medium">{p.name}</td>
+                  <td className="p-3 text-muted-foreground">{p.age}</td>
+                  <td className="p-3 text-muted-foreground">{p.gender}</td>
+                  <td className="p-3 text-muted-foreground">{p.department}</td>
+                  <td className="p-3 text-muted-foreground">{p.doctor}</td>
+                  <td className="p-3">
+                    <Badge variant="outline" className={statusColor[p.status]}>{p.status}</Badge>
+                  </td>
                 </tr>
-              </thead>
-              <tbody>
-                {patients?.map((p) => (
-                  <tr key={p.id} className="border-b last:border-0 hover:bg-muted/30 transition-colors">
-                    <td className="p-3 text-muted-foreground font-mono text-xs">{p.patient_id}</td>
-                    <td className="p-3 font-medium">{p.name}</td>
-                    <td className="p-3 text-muted-foreground">{p.age}</td>
-                    <td className="p-3 text-muted-foreground">{p.gender}</td>
-                    <td className="p-3 text-muted-foreground">{p.department}</td>
-                    <td className="p-3 text-muted-foreground">{(p.doctors as any)?.name ?? "—"}</td>
-                    <td className="p-3">
-                      <Badge variant="outline" className={statusColor[p.status] ?? ""}>{p.status}</Badge>
-                    </td>
-                  </tr>
-                ))}
-                {patients?.length === 0 && (
-                  <tr><td colSpan={7} className="p-8 text-center text-muted-foreground">No patients found.</td></tr>
-                )}
-              </tbody>
-            </table>
-          </div>
-        )}
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </DashboardLayout>
   );
