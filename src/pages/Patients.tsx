@@ -1,19 +1,10 @@
 import { DashboardLayout } from "@/components/DashboardLayout";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
-import { Search, Plus } from "lucide-react";
+import { Search, Plus, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-
-const patients = [
-  { id: "P-1001", name: "Sarah Johnson", age: 34, gender: "Female", phone: "(555) 123-4567", department: "Cardiology", status: "Admitted", doctor: "Dr. Smith" },
-  { id: "P-1002", name: "Michael Chen", age: 52, gender: "Male", phone: "(555) 234-5678", department: "Neurology", status: "Outpatient", doctor: "Dr. Patel" },
-  { id: "P-1003", name: "Emily Davis", age: 28, gender: "Female", phone: "(555) 345-6789", department: "Orthopedics", status: "Discharged", doctor: "Dr. Kim" },
-  { id: "P-1004", name: "James Wilson", age: 67, gender: "Male", phone: "(555) 456-7890", department: "Oncology", status: "Admitted", doctor: "Dr. Adams" },
-  { id: "P-1005", name: "Maria Garcia", age: 41, gender: "Female", phone: "(555) 567-8901", department: "Dermatology", status: "Outpatient", doctor: "Dr. Lee" },
-  { id: "P-1006", name: "David Brown", age: 59, gender: "Male", phone: "(555) 678-9012", department: "Cardiology", status: "Admitted", doctor: "Dr. Smith" },
-  { id: "P-1007", name: "Lisa Thompson", age: 45, gender: "Female", phone: "(555) 789-0123", department: "Gynecology", status: "Outpatient", doctor: "Dr. Wang" },
-  { id: "P-1008", name: "Robert Lee", age: 73, gender: "Male", phone: "(555) 890-1234", department: "Pulmonology", status: "Admitted", doctor: "Dr. Patel" },
-];
+import { useQuery } from "@tanstack/react-query";
+import { fetchPatients } from "@/lib/api";
 
 const statusColor: Record<string, string> = {
   Admitted: "bg-info/15 text-info border-info/20",
@@ -22,6 +13,14 @@ const statusColor: Record<string, string> = {
 };
 
 export default function Patients() {
+  const { data: patients, isLoading, error } = useQuery({
+    queryKey: ['patients'],
+    queryFn: fetchPatients
+  });
+
+  if (isLoading) return <div className="flex justify-center p-10"><Loader2 className="animate-spin" /></div>;
+  if (error) return <div className="p-10 text-red-500">Error loading patients</div>;
+
   return (
     <DashboardLayout>
       <div className="space-y-6">
@@ -33,11 +32,6 @@ export default function Patients() {
           <Button className="gap-2 self-start">
             <Plus className="h-4 w-4" /> Add Patient
           </Button>
-        </div>
-
-        <div className="relative max-w-sm">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-          <Input placeholder="Search patients..." className="pl-9" />
         </div>
 
         <div className="bg-card rounded-lg border overflow-x-auto">
@@ -54,14 +48,14 @@ export default function Patients() {
               </tr>
             </thead>
             <tbody>
-              {patients.map((p) => (
+              {patients?.map((p: any) => (
                 <tr key={p.id} className="border-b last:border-0 hover:bg-muted/30 transition-colors">
                   <td className="p-3 text-muted-foreground font-mono text-xs">{p.id}</td>
                   <td className="p-3 font-medium">{p.name}</td>
                   <td className="p-3 text-muted-foreground">{p.age}</td>
                   <td className="p-3 text-muted-foreground">{p.gender}</td>
                   <td className="p-3 text-muted-foreground">{p.department}</td>
-                  <td className="p-3 text-muted-foreground">{p.doctor}</td>
+                  <td className="p-3 text-muted-foreground">{p.doctor_name}</td>
                   <td className="p-3">
                     <Badge variant="outline" className={statusColor[p.status]}>{p.status}</Badge>
                   </td>

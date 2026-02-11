@@ -1,16 +1,9 @@
 import { DashboardLayout } from "@/components/DashboardLayout";
 import { Badge } from "@/components/ui/badge";
-import { BedDouble } from "lucide-react";
+import { BedDouble, Loader2 } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
-
-const wards = [
-  { id: 1, name: "General Ward A", total: 30, occupied: 24, type: "General" },
-  { id: 2, name: "General Ward B", total: 30, occupied: 28, type: "General" },
-  { id: 3, name: "ICU", total: 15, occupied: 12, type: "Critical" },
-  { id: 4, name: "Pediatric Ward", total: 20, occupied: 11, type: "Pediatric" },
-  { id: 5, name: "Maternity Ward", total: 15, occupied: 9, type: "Maternity" },
-  { id: 6, name: "Surgical Ward", total: 10, occupied: 8, type: "Surgical" },
-];
+import { useQuery } from "@tanstack/react-query";
+import { fetchWards } from "@/lib/api";
 
 const typeColor: Record<string, string> = {
   General: "bg-info/15 text-info border-info/20",
@@ -21,24 +14,32 @@ const typeColor: Record<string, string> = {
 };
 
 export default function Beds() {
+  const { data: wards, isLoading, error } = useQuery({
+    queryKey: ['wards'],
+    queryFn: fetchWards
+  });
+
+  if (isLoading) return <div className="flex justify-center p-10"><Loader2 className="animate-spin" /></div>;
+  if (error) return <div className="p-10 text-red-500">Error loading wards</div>;
+
   return (
     <DashboardLayout>
       <div className="space-y-6">
         <div>
           <h1 className="text-2xl font-bold">Beds & Wards</h1>
-          <p className="text-muted-foreground text-sm mt-1">Monitor bed availability across wards</p>
+          <p className="text-muted-foreground text-sm mt-1">Monitor bed availability</p>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {wards.map((ward) => {
-            const available = ward.total - ward.occupied;
-            const occupancy = Math.round((ward.occupied / ward.total) * 100);
+          {wards?.map((ward: any) => {
+            const available = ward.total_beds - ward.occupied_beds;
+            const occupancy = Math.round((ward.occupied_beds / ward.total_beds) * 100);
             return (
-              <div key={ward.id} className="bg-card rounded-lg border p-5 animate-fade-in">
+              <div key={ward.id} className="bg-card rounded-lg border p-5">
                 <div className="flex items-center justify-between mb-4">
                   <div className="flex items-center gap-3">
                     <div className="h-10 w-10 rounded-lg bg-accent flex items-center justify-center">
-                      <BedDouble className="h-5 w-5" style={{ stroke: "url(#pink-gradient)" }} />
+                      <BedDouble className="h-5 w-5" />
                     </div>
                     <div>
                       <h3 className="font-semibold text-sm">{ward.name}</h3>
@@ -53,8 +54,8 @@ export default function Beds() {
                     <span className="font-medium text-primary">{available} available</span>
                   </div>
                   <div className="flex justify-between text-xs text-muted-foreground">
-                    <span>{ward.occupied} occupied</span>
-                    <span>{ward.total} total</span>
+                    <span>{ward.occupied_beds} occupied</span>
+                    <span>{ward.total_beds} total</span>
                   </div>
                 </div>
               </div>

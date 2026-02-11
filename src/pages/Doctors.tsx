@@ -1,15 +1,8 @@
 import { DashboardLayout } from "@/components/DashboardLayout";
 import { Badge } from "@/components/ui/badge";
-import { Stethoscope } from "lucide-react";
-
-const doctors = [
-  { id: 1, name: "Dr. Smith", specialty: "Cardiology", experience: "15 years", patients: 42, status: "Available" },
-  { id: 2, name: "Dr. Patel", specialty: "Neurology", experience: "12 years", patients: 38, status: "Available" },
-  { id: 3, name: "Dr. Kim", specialty: "Orthopedics", experience: "8 years", patients: 29, status: "In Surgery" },
-  { id: 4, name: "Dr. Adams", specialty: "Oncology", experience: "20 years", patients: 51, status: "Available" },
-  { id: 5, name: "Dr. Lee", specialty: "Dermatology", experience: "6 years", patients: 35, status: "On Leave" },
-  { id: 6, name: "Dr. Wang", specialty: "Gynecology", experience: "10 years", patients: 44, status: "Available" },
-];
+import { Stethoscope, Loader2 } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
+import { fetchDoctors } from "@/lib/api";
 
 const statusColor: Record<string, string> = {
   Available: "bg-success/15 text-success border-success/20",
@@ -18,6 +11,14 @@ const statusColor: Record<string, string> = {
 };
 
 export default function Doctors() {
+  const { data: doctors, isLoading, error } = useQuery({
+    queryKey: ['doctors'],
+    queryFn: fetchDoctors
+  });
+
+  if (isLoading) return <div className="flex justify-center p-10"><Loader2 className="animate-spin" /></div>;
+  if (error) return <div className="p-10 text-red-500">Error loading doctors</div>;
+
   return (
     <DashboardLayout>
       <div className="space-y-6">
@@ -27,11 +28,11 @@ export default function Doctors() {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {doctors.map((doc) => (
-            <div key={doc.id} className="bg-card rounded-lg border p-5 hover:shadow-sm transition-shadow animate-fade-in">
+          {doctors?.map((doc: any) => (
+            <div key={doc.id} className="bg-card rounded-lg border p-5 hover:shadow-sm transition-shadow">
               <div className="flex items-center gap-3 mb-4">
                 <div className="h-11 w-11 rounded-full bg-accent flex items-center justify-center">
-                  <Stethoscope className="h-5 w-5" style={{ stroke: "url(#pink-gradient)" }} />
+                  <Stethoscope className="h-5 w-5" />
                 </div>
                 <div>
                   <h3 className="font-semibold text-sm">{doc.name}</h3>
@@ -42,10 +43,6 @@ export default function Doctors() {
                 <div className="flex justify-between">
                   <span className="text-muted-foreground">Experience</span>
                   <span className="font-medium">{doc.experience}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-muted-foreground">Patients</span>
-                  <span className="font-medium">{doc.patients}</span>
                 </div>
                 <div className="flex justify-between items-center">
                   <span className="text-muted-foreground">Status</span>
