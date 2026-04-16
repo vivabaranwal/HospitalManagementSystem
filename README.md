@@ -1,39 +1,53 @@
-# Hospital Management System
+# Hospital Management System (HMS)
 
-A modern full-stack application for managing hospital records, patients, doctors, and appointments.
+A professional, full-stack Hospital Management System with a React frontend and a Flask (Python) REST API backend, integrated with Supabase (PostgreSQL).
 
-## Tech Stack
+## Project Structure
 
-### Frontend
-- **Framework:** React 18 + Vite
-- **Language:** TypeScript
-- **Styling:** Tailwind CSS + Shadcn UI
-- **State/Query:** Tanstack Query (React Query)
+This project is organized into two main components:
 
-### Backend
-- **Framework:** Flask (Python)
-- **Database Driver:** Psycopg2
-- **Database:** PostgreSQL (Supabase)
+- **[/frontend](./frontend)**: The user interface built with React, Vite, TypeScript, and Tailwind CSS.
+- **[/backend](./backend)**: The REST API and database logic built with Flask and Psycopg3.
 
-## Setup Instructions
+## Quick Start
 
-### 1. Prerequisites
-- Node.js (v18+)
-- Python (v3.10+)
-- A Supabase account (or any PostgreSQL database)
+### 1. Automatic Startup (Windows)
 
-### 2. Database Setup
-Ensure your database has the following tables:
-- `patients` (id, name, age, gender, phone, department, status, doctor_name)
-- `doctors` (id, name, specialty, experience, status)
-- `appointments` (id, patient_name, doctor_name, department, date, time, type, status)
-- `wards` (id, name, total_beds, occupied_beds, type)
+Use the provided master script to launch both the backend and frontend simultaneously:
 
-### 3. Backend Setup
-Navigate to the backend folder:
+```bash
+run START_HMS.bat
+```
+
+### 2. Manual Setup
+
+#### Backend
 ```bash
 cd backend
 python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
+# Activate venv
 pip install -r requirements.txt
-cp .env.example .env
+python app.py
+```
+
+#### Frontend
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+## Features
+
+- **Clinical Dashboard**: Real-time overview of hospital metrics.
+- **Patient Management**: Complete CRUD operations for patient registration.
+- **Appointment Booking**: Specialist-driven scheduling system.
+- **Ward Logistics**: Telemetry-style tracking for bed availability.
+- **Staff Directory**: Categorized views for doctors and departments.
+
+## Tech Stack
+
+- **Frontend**: React 18, Vite, TypeScript, TanStack Query, Shadcn UI.
+- **Backend**: Flask, Psycopg3, Python Dotenv.
+- **Database**: PostgreSQL (Supabase).
+- **Styling**: Tailwind CSS with Premium Neon/Glassmorphism design.

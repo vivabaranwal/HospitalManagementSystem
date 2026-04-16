@@ -20,7 +20,7 @@ start "HMS Backend" cmd /k "cd /d "%~dp0backend" && python app.py"
 
 :: Wait 2 seconds then launch Vite frontend in a new window
 timeout /t 2 /nobreak > nul
-start "HMS Frontend" cmd /k "cd /d "%~dp0" && npm run dev"
+start "HMS Frontend" cmd /k "cd /d "%~dp0frontend" && npm run dev"
 
 echo  Both servers are starting in separate windows.
 echo  Open http://localhost:8080 in your browser.
