@@ -30,8 +30,8 @@ export function AppSidebar() {
   return (
     <Sidebar collapsible="icon">
       <div className="p-4 flex items-center gap-3 border-b border-sidebar-border">
-        <div className="h-9 w-9 rounded-lg bg-sidebar-primary flex items-center justify-center shrink-0">
-          <Activity className="h-5 w-5" style={{ stroke: "url(#pink-gradient)" }} />
+        <div className="h-9 w-9 shrink-0 overflow-hidden">
+          <img src="/favicon.svg" alt="Logo" className="h-full w-full object-cover rounded-xl shadow-[0_0_15px_rgba(64,203,168,0.2)]" />
         </div>
         <div className="group-data-[collapsible=icon]:hidden">
           <h1 className="font-bold text-sidebar-primary-foreground text-base leading-tight">MediCare</h1>
