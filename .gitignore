@@ -1,0 +1,32 @@
+# Root gitignore
+.git/
+.venv/
+.env
+.env.local
+node_modules/
+dist/
+dist-ssr/
+
+# Backend specific
+backend/venv/
+backend/.env
+backend/__pycache__/
+backend/*.pyc
+
+# Frontend specific (redundant but good to have at root)
+frontend/node_modules/
+frontend/dist/
+frontend/.env
+frontend/.env.local
+
+# Editor settings
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+
+# OS generated
+Thumbs.db
+ehthumbs.db
+Desktop.ini
